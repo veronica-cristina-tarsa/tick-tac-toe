@@ -1,5 +1,5 @@
 <template>
-  <h1>Tick Tac Toe</h1>
+  <h1>Colors Tick Tac Toe</h1>
   <div class="top">
     <section class="game">
       <GameBoard />

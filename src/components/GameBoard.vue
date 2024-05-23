@@ -9,19 +9,19 @@
           </div>
           <div class="color-group" v-for="color in colors1" :key="color">
             <input type="radio" :value="color" v-model="player1Color" :id="'player2-' + color" required />
-            <label :for="'player2-' + color" :style="{ color: color }">{{ color }}</label>
+            <label class="color-label" for="'player2-' + color" :style="{ color: color }">{{ color }}</label>
           </div>
         </div>
 
         <div>
           <div class="form-group">
             <label for="player2">Player 2: <span v-if="submitted">{{ player2 }}</span></label>
-            <input type="text" id="player2" v-model="player2" @keyup.enter="handleSubmit(2)" @blur="handleSubmit(2)"/>
+            <input type="text" id="player2" v-model="player2"/>
           </div>
 
           <div class="color-group" v-for="color in colors2" :key="color">
             <input type="radio" :value="color" v-model="player2Color" :id="'player2-' + color" required />
-            <label :for="'player2-' + color" :style="{ color: color }">{{ color }}</label>
+            <label class="color-label" :for="'player2-' + color" :style="{ color: color }">{{ color }}</label>
           </div>
         </div>
       </div>
@@ -97,6 +97,11 @@ export default {
       }
 
       alert(`The winner is: ${winner === 1 ? player1.value : player2.value}`);
+      player1.value = '';
+      player2.value = '';
+      player1Color.value = '';
+      player2Color.value = '';
+      submitted.value = false;
     };
 
     return {
@@ -139,8 +144,11 @@ label {
   margin-bottom: 0.5rem;
 }
 
+.color-label {
+  display: inline-block;
+}
+
 input {
-  width: 100%;
   padding: 0.5rem;
   box-sizing: border-box;
 }

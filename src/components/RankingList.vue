@@ -61,6 +61,7 @@ export default {
         body: JSON.stringify({}),
       });
       const data = await response.json();
+      scores.value = data;
       console.log('Success clear', data);
     };
 
