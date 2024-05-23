@@ -52,7 +52,7 @@ export default {
 
 
     const clearValues = async() => {
-      const response = await fetch('http://localhost:3000/player-info', {
+      const response = await fetch('http://localhost:3000/clear-info', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,5 @@
 <template>
   <div class="tic-tac-toe">
-    <h1>Tic-Tac-Toe</h1>
     <table>
       <tbody>
         <tr v-for="(row, rowIndex) in grid" :key="rowIndex">
