@@ -8,29 +8,18 @@
             <input type="text" id="player1" v-model="player1" />
           </div>
           <div class="color-group" v-for="color in colors1" :key="color">
-            <input type="radio" :value="color" v-model="player1Color" :id="'player2-' + color" required />
-            <label class="color-label" for="'player2-' + color" :style="{ color: color }">{{ color }}</label>
+            <input type="radio" :value="color" v-model="player1Color" :id="'player1-' + color" required />
+            <label class="color-label" for="'player1-' + color" :style="{ color: color }">{{ color }}</label>
           </div>
         </div>
 
-        <div>
-          <div class="form-group">
-            <label for="player2">Player 2: <span v-if="submitted">{{ player2 }}</span></label>
-            <input type="text" id="player2" v-model="player2"/>
-          </div>
-
-          <div class="color-group" v-for="color in colors2" :key="color">
-            <input type="radio" :value="color" v-model="player2Color" :id="'player2-' + color" required />
-            <label class="color-label" :for="'player2-' + color" :style="{ color: color }">{{ color }}</label>
-          </div>
-        </div>
       </div>
 
       <button type="submit">Submit</button>
     </form>
 
-    <div v-if="submitted">
-      <ColorGrid :player1Color="player1Color" :player2Color="player2Color" @winner="handleWinner"/>
+    <div>
+      <ColorGrid :player1Color="player1Color" @winner="handleWinner"/>
     </div>
   </div>
 </template>
@@ -45,13 +34,10 @@ export default {
   },
   setup() {
     const player1 = ref('');
-    const player2 = ref('');
     const player1Color = ref('red');
-    const player2Color = ref('pink');
     const submitted = ref(false);
 
     const colors1 = ['red', 'blue', 'green', 'khaki', 'orange', 'purple'];
-    const colors2 = ['pink', 'aqua', 'olive', 'gold', 'coral', 'plum'];
 
     const handleSubmit = async() => {
       const response = await fetch('http://localhost:3000/player-info', {
@@ -63,9 +49,6 @@ export default {
         body: JSON.stringify([{
           name: player1.value,
           color: player1Color.value,
-        }, {
-          name: player2.value,
-          color: player2Color.value,
         }]),
       });
 
@@ -80,38 +63,14 @@ export default {
     };
 
     const handleWinner = async(winner) => {
-      const response = await fetch('http://localhost:3000/player-info', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:8080/'
-        },
-        body: JSON.stringify({
-          name: winner === 1 ? player1.value : player2.value,
-        }),
-      });
-
-      if (!response.ok) {
-        console.log(response)
-        throw new Error('Network response was not ok');
-      }
-
-      alert(`The winner is: ${winner === 1 ? player1.value : player2.value}`);
-      player1.value = '';
-      player2.value = '';
-      player1Color.value = '';
-      player2Color.value = '';
-      submitted.value = false;
+      alert(`The winner is: ${winner}`);
     };
 
     return {
       player1,
-      player2,
       player1Color,
-      player2Color,
       submitted,
       colors1,
-      colors2,
       handleSubmit,
       handleWinner,
     };

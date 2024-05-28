@@ -1,17 +1,15 @@
 <template>
   <div class="score-table">
     <h1>Ranking</h1>
-    <table v-if="scores.length > 0">
+    <table v-if="players.length > 0">
       <thead>
         <tr>
           <th>Name</th>
-          <th>Score</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="player in scores" :key="player.name">
+        <tr v-for="player in players" :key="player.name">
           <td>{{ player.name }}</td>
-          <td>{{ player.score }}</td>
         </tr>
       </tbody>
     </table>
@@ -20,9 +18,6 @@
       
     <div class="clear-form">
       <button type="button" @click="fetchScores">Refresh</button>
-    </div>
-    <div class="clear-form">
-      <button type="button" @click="clearValues">Clear all</button>
     </div>
   </div>
 </template>
@@ -33,14 +28,14 @@ import { ref, onMounted } from 'vue';
 export default {
   name: 'ScoreTable',
   setup() {
-    const scores = ref([]);
+    const players = ref([]);
 
     const fetchScores = async () => {
       try {
         const response = await fetch('http://localhost:3000/player-info');
         const data = await response.json();
 
-        scores.value = data;
+        players.value = data;
       } catch (error) {
         console.error('Error fetching scores:', error);
       }
@@ -61,12 +56,12 @@ export default {
         body: JSON.stringify({}),
       });
       const data = await response.json();
-      scores.value = data;
+      players.value = data;
       console.log('Success clear', data);
     };
 
     return {
-      scores,
+      players,
       fetchScores,
       clearValues
     };
