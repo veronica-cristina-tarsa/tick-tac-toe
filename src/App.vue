@@ -1,26 +1,47 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>Colors Tic Tac Toe</h1>
+  <div class="top">
+    <section class="game">
+      <GameBoard />
+    </section>
+    <section class="ranking">
+      <RankingList />
+    </section>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import GameBoard from "./components/GameBoard.vue"
+import RankingList from "./components/RankingList.vue"
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    GameBoard,
+    RankingList
   }
 }
 </script>
 
 <style>
-#app {
+body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding: 30px;;
+}
+
+.top {
+  display: flex;
+}
+.game {
+  flex-grow: 1;
+}
+.ranking {
+
+}
+.form {
+
 }
 </style>
